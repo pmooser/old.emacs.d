@@ -1,5 +1,6 @@
-(defconst bin-dir (concat (getenv "HOME") "/bin"))
+(defconst bin-dir   (concat (getenv "HOME") "/bin"))
 (defconst elisp-dir (concat (getenv "HOME") "/.emacs.d/elisp"))
+(defconst pkgs-dir  (concat (getenv "HOME") "/.emacs.d/pkgs"))
 
 ;; make sure things in my bin directory can be found:
 (setenv "PATH" (concat (getenv "PATH") ":" bin-dir))
@@ -7,8 +8,12 @@
 
 ;; load my elisp directories:x
 (load "~/.emacs.d/elisp/subdirectories.el")
-(setq load-path 
-      (append (cons elisp-dir (subdirectories elisp-dir)) load-path))
+
+(setq load-path
+     (append (list elisp-dir pkgs-dir)
+             (subdirectories elisp-dir)
+             (subdirectories pkgs-dir)
+             load-path))
 
 ;; start a server so we can open files in an emacs instance from the cmd line
 (server-start)

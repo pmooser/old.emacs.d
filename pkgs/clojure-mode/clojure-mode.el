@@ -681,7 +681,10 @@ This function also returns nil meaning don't specify the indentation."
 
         (cond ((member (char-after open-paren) '(?\[ ?\{))
                (goto-char open-paren)
-               (1+ (current-column)))
+               ;; I've modififed this to maintain my "pretty"
+               ;; spacing with these data structure literals
+               (when (re-search-forward "\\s-*\\(\\w\\|\\s_\\)")
+                 (- (current-column) 1)))
               ((or (eq method 'defun)
                    (and (null method)
                         (> (length function) 3)
