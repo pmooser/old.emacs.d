@@ -1,13 +1,13 @@
-(defconst bin-dir   (concat (getenv "HOME") "/bin"))
-(defconst elisp-dir (concat (getenv "HOME") "/.emacs.d/elisp"))
-(defconst pkgs-dir  (concat (getenv "HOME") "/.emacs.d/pkgs"))
-
 ;; make sure things in my bin directory can be found:
+(defconst bin-dir   (concat (getenv "HOME") "/bin"))
 (setenv "PATH" (concat (getenv "PATH") ":" bin-dir))
 (setq exec-path (append exec-path (list bin-dir)))
 
-;; load my elisp directories:x
-(load "~/.emacs.d/elisp/subdirectories.el")
+;; load my elisp directories:
+(defconst elisp-dir (locate-user-emacs-file "elisp"))
+(defconst pkgs-dir  (locate-user-emacs-file "pkgs"))
+
+(load (concat elisp-dir "/subdirectories.el"))
 
 (setq load-path
      (append (list elisp-dir pkgs-dir)
@@ -75,6 +75,10 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 
+;; expand region
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 ;; snippets
 (require 'yasnippet)
 
@@ -98,17 +102,6 @@
 (require 'font-lock)
 (setq font-lock-maximum-decoration t)
 (global-font-lock-mode t)
-
-;; greedy delete
-(require 'greedy-delete)
-
-(dolist (hook '(ruby-mode-hook
-		c-mode-common-hook
-		lisp-mode-hook
-		lisp-interaction-mode-hook
-                ;;clojure-mode-hook
-		emacs-lisp-mode-hook))
-  (add-hook hook 'gd-add-to-mode))
 
 ;; mode selection by filename suffix
 (setq auto-mode-alist
