@@ -1,5 +1,5 @@
 ;; make sure things in my bin directory can be found:
-(defconst bin-dir   (concat (getenv "HOME") "/bin"))
+(defconst bin-dir (concat (getenv "HOME") "/bin"))
 (setenv "PATH" (concat (getenv "PATH") ":" bin-dir))
 (setq exec-path (append exec-path (list bin-dir)))
 
