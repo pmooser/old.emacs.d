@@ -138,7 +138,8 @@
  '(bs-default-configuration "files-and-scratch")
  '(bs-default-sort-name "by filename")
  '(ido-enable-flex-matching t)
- '(quack-pretty-lambda-p t))
+ '(quack-pretty-lambda-p t)
+ '(reb-re-syntax (quote string)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
