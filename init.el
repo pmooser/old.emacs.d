@@ -81,6 +81,8 @@
 
 ;; snippets
 (require 'yasnippet)
+(require 's)
+(yas-global-mode 1)
 
 ;; undo tree!
 ;; C-x u to visualize
