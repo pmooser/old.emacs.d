@@ -15,6 +15,12 @@
              (subdirectories pkgs-dir)
              load-path))
 
+;; This is intended for machine-local changes, and thus won't
+;; actually be checked into the repo.
+(defconst local-settings (locate-user-emacs-file "local.el"))
+(if (file-exists-p local-settings)
+    (load local-settings))
+
 ;; start a server so we can open files in an emacs instance from the cmd line
 (server-start)
 
@@ -79,11 +85,6 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
-;; snippets
-(require 'yasnippet)
-(require 's)
-(yas-global-mode 1)
-
 ;; undo tree!
 ;; C-x u to visualize
 (require 'undo-tree)
@@ -98,6 +99,7 @@
 (require 'paul-scheme)
 (require 'paul-haskell)
 (require 'paul-c)
+(require 'paul-yas)
 (require 'paul-bindings)
 
 ;; Visual characteristics:
