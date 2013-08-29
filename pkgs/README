@@ -1,0 +1,5 @@
+The subtree command doesn't seem to embed the origin of the subtree anywhere. I'll keep some notes here.
+
+# adding nrepl.el
+git subtree add --prefix pkgs/nrepl https://github.com/clojure-emacs/nrepl.el.git master --squash
+
