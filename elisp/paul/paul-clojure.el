@@ -36,7 +36,6 @@
 
 ;; basic setup
 (require 'clojure-mode)
-(require 'clojurescript-mode)
 
 ;; (defvar slime-override-map (make-keymap))
 
