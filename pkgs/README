@@ -6,6 +6,13 @@ subtree add --prefix pkgs/ac-nrepl https://github.com/clojure-emacs/ac-nrepl.git
 
 # cl-lib and pkg-info added manually (no subtree)
 
+# clojure-mode 
+
+subtree add --prefix pkgs/clojure-mode https://github.com/clojure-emacs/clojure-mode.git master --squash
+
+git subtree pull --prefix pkgs/clojure-mode https://github.com/clojure-emacs/clojure-mode.git master --squash
+
+
 # adding nrepl.el
 git subtree add --prefix pkgs/nrepl https://github.com/clojure-emacs/nrepl.el.git master --squash
 
