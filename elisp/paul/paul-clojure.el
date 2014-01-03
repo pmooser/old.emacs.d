@@ -3,11 +3,12 @@
 ;; nrepl
 
 (require 'cider)
-(require 'ac-nrepl)
 
 (setq cider-popup-stacktraces nil)
-
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+
+;; ac-nrepl for auto completion
+(require 'ac-nrepl)
 
 (add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
 (add-hook 'cider-mode-hook 'ac-nrepl-setup)
@@ -25,12 +26,11 @@
 ;;(define-key ac-completing-map [return] 'nrepl-return)
 
 ;; auto complete source using slime completions (works for clojure)
+
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
-;; ignore slime's protocol version warnings
-;; This doesn't work - probably needs to be attached to a slime mode hook
 (require 'slime)
 (setq slime-protocol-version 'ignore)
 (slime-setup '(slime-repl slime-fancy))
@@ -56,14 +56,14 @@
 ;; (define-key slime-override-map (kbd "C-<right>") 'forward-word)
 ;; (define-key slime-override-map (kbd "C-<left>") 'backward-word)
 
-;; (add-hook 'slime-repl-mode-hook
-;;           (lambda ()
-;;             (slime-override-mode t)
-;;             (slime-redirect-inferior-output)
-;;             (modify-syntax-entry ?\[ "(]")
-;;             (modify-syntax-entry ?\] ")[")
-;;             (modify-syntax-entry ?\{ "(}")
-;;             (modify-syntax-entry ?\} "){")))
+(add-hook 'slime-repl-mode-hook
+          (lambda ()
+            (slime-override-mode t)
+            (slime-redirect-inferior-output)
+            (modify-syntax-entry ?\[ "(]")
+            (modify-syntax-entry ?\] ")[")
+            (modify-syntax-entry ?\{ "(}")
+            (modify-syntax-entry ?\} "){")))
 
 ;; slime-repl-specific bindings that we need:
 (define-key slime-repl-mode-map (kbd "{") 'paredit-open-curly)
@@ -83,7 +83,7 @@
 ;; swank-clojure-1.4.0:
 ;; This references some seemingly-undefined tramp functions,
 ;; and this avoids that causing things to blow up:
-(remove-hook 'slime-connected-hook 'clojure-slime-remote-file-name-hook)
+;;(remove-hook 'slime-connected-hook 'clojure-slime-remote-file-name-hook)
 
 ;; Anything that starts with 'def' should get keyword highlighting:
 (font-lock-add-keywords
@@ -101,10 +101,11 @@
 
 (require 'rainbow-delimiters)
 
+(add-hook 'cider-mode-hook
+          (lambda () (idle-highlight-mode t)))
+
 (defun do-clojure-setup ()
   (rainbow-delimiters-mode t)
-  (idle-highlight-mode t)
-  (show-paren-mode t)
   (paredit-mode +1))
 
 (dolist (hook

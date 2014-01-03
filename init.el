@@ -92,9 +92,10 @@
 
 ;; my personal settings
 (require 'paul-lisps)
+(require 'paul-clojure)
+
 (require 'paul-utilities)
 (require 'paul-advice)
-(require 'paul-clojure)
 (require 'paul-c)
 (require 'paul-yas)
 (require 'paul-bindings)

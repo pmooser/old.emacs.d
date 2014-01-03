@@ -36,7 +36,8 @@
                      lisp-interaction-mode-hook
                      scheme-mode-hook
                      clojure-mode-hook
-                     nrepl-mode-hook
+                     cider-mode-hook
+                     cider-repl-mode-hook
                      slime-mode-hook
                      slime-repl-mode-hook))
 
@@ -49,8 +50,8 @@
 (dolist (hook lisp-modes)
   (add-hook hook 'do-lisps-setup))
 
-;; setup for newline in lisp modes that aren't nrepl
-(dolist (hook (remove 'nrepl-mode-hook lisp-modes))
+;; setup for newline in lisp modes that aren't cider
+(dolist (hook (remove 'cider-repl-mode-hook (remove 'cider-mode-hook lisp-modes)))
   (add-hook hook 
             (lambda ()
               (local-set-key (kbd "RET") 'paredit-newline))))
