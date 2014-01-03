@@ -1,15 +1,16 @@
 (message "Setting up clojure ...")
 
 ;; nrepl
-(require 'nrepl)
+
+(require 'cider)
 (require 'ac-nrepl)
 
-(setq nrepl-popup-stacktraces nil)
+(setq cider-popup-stacktraces nil)
 
-(add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
-(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
-(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-mode-hook 'ac-nrepl-setup)
 
 ;; auto-complete
 (setq ac-dictionary-directories (list "~/elisp/other/auto-complete/dict"))
@@ -76,7 +77,8 @@
 (define-key clojure-mode-map "}" 'paredit-close-curly)
 
 ;; idle highlighting
-(require 'idle-highlight-mode)
+(if (boundp 'idle-highlight-mode)
+    (require 'idle-highlight-mode))
 
 ;; swank-clojure-1.4.0:
 ;; This references some seemingly-undefined tramp functions,
@@ -107,8 +109,8 @@
 
 (dolist (hook
          '(clojure-mode-hook
-           nrepl-mode-hook
-           nrepl-interaction-mode-hook
+           cider-mode-hook
+           cider-repl-mode-hook
            slime-mode-hook
            slime-repl-mode-hook))
   (add-hook hook 'do-clojure-setup))

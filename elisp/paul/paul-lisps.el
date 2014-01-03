@@ -42,7 +42,7 @@
 
 (defun do-lisps-setup ()
   (rainbow-delimiters-mode t)
-  (idle-highlight-mode t)
+  ;;(idle-highlight-mode t)
   (show-paren-mode t)
   (paredit-mode +1))
 
