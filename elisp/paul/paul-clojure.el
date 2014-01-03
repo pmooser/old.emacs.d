@@ -5,22 +5,27 @@
 (require 'cider)
 
 (setq cider-popup-stacktraces nil)
+
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
-;; ac-nrepl for auto completion
+;; NOTE - for some reason, ac-nrepl causes the first command executed in the repl
+;; to take a significant amount of time. This never used to happen, before cider.
+
 (require 'ac-nrepl)
 
 (add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
 (add-hook 'cider-mode-hook 'ac-nrepl-setup)
 
-;; auto-complete
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'cider-repl-mode))
+
+;; ;; auto-complete
 (setq ac-dictionary-directories (list "~/elisp/other/auto-complete/dict"))
 (require 'auto-complete-config)
 (ac-config-default)
 
-;; This is disabled for now, because having this set
-;; means hitting return while not connected to an nrepl session
-;; results in an error:
+;; This is disabled for now, because having this set means hitting return while 
+;; not connected to an nrepl session results in an error:
 ;; auto-complete normally uses RET to accept a completion,
 ;; but sometimes I don't want that, so this will disable it:
 ;;(define-key ac-completing-map [return] 'nrepl-return)
@@ -56,14 +61,14 @@
 ;; (define-key slime-override-map (kbd "C-<right>") 'forward-word)
 ;; (define-key slime-override-map (kbd "C-<left>") 'backward-word)
 
-(add-hook 'slime-repl-mode-hook
-          (lambda ()
-            (slime-override-mode t)
-            (slime-redirect-inferior-output)
-            (modify-syntax-entry ?\[ "(]")
-            (modify-syntax-entry ?\] ")[")
-            (modify-syntax-entry ?\{ "(}")
-            (modify-syntax-entry ?\} "){")))
+;; (add-hook 'slime-repl-mode-hook
+;;           (lambda ()
+;;             (slime-override-mode t)
+;;             (slime-redirect-inferior-output)
+;;             (modify-syntax-entry ?\[ "(]")
+;;             (modify-syntax-entry ?\] ")[")
+;;             (modify-syntax-entry ?\{ "(}")
+;;             (modify-syntax-entry ?\} "){")))
 
 ;; slime-repl-specific bindings that we need:
 (define-key slime-repl-mode-map (kbd "{") 'paredit-open-curly)
@@ -101,8 +106,10 @@
 
 (require 'rainbow-delimiters)
 
-(add-hook 'cider-mode-hook
-          (lambda () (idle-highlight-mode t)))
+;; If we add this to cider-repl-mode-hook, it causes everything to hang:
+(dolist (hook '(clojure-mode-hook cider-mode-hook))
+  (add-hook hook (lambda ()
+                   (idle-highlight-mode t))))
 
 (defun do-clojure-setup ()
   (rainbow-delimiters-mode t)
