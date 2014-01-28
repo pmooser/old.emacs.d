@@ -105,6 +105,9 @@
     (1 font-lock-keyword-face))))
 
 (require 'rainbow-delimiters)
+(require 'idle-highlight-mode)
+
+;; NOTE: This stuff seems redundant with other things in paul-lisps
 
 ;; If we add this to cider-repl-mode-hook, it causes everything to hang:
 (dolist (hook '(clojure-mode-hook cider-mode-hook))

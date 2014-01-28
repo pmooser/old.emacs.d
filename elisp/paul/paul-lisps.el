@@ -51,7 +51,7 @@
   (add-hook hook 'do-lisps-setup))
 
 ;; setup for newline in lisp modes that aren't cider
-(dolist (hook (remove 'cider-repl-mode-hook (remove 'cider-mode-hook lisp-modes)))
+(dolist (hook (remove 'cider-repl-mode-hook lisp-modes))
   (add-hook hook 
             (lambda ()
               (local-set-key (kbd "RET") 'paredit-newline))))
